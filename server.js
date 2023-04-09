@@ -13,13 +13,14 @@ const rpsls_endpoint = new RegExp("^\/app\/rpsls(|\/)$");
 const rps_play_url_endpoint = /^\/app\/rps\/play\/shot=((r|R)ock|(p|P)aper|(s|S)cissors)(|\/)$/;
 const rps_play_json_endpoint = /^\/app\/rps\/play\/{\"shot\"\:\"((r|R)ock|(p|P)aper|(s|S)cissors)\"}(|\/)$/
 const rpsls_play_url_endpoint = /^\/app\/rpsls\/play\/shot=((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)(|\/)$/;
-const rpsls_play_json_endpoint = /^\/app\/rpsls\/play\/{\"shot\"\:\"((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)\"}(|\/)$/
+const rpsls_play_json_endpoint = /^\/app\/rpsls\/play\/{\"shot\"\:\"((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)\"}(|\/)$/;
 const rps_play_only_endpoint = /^\/app\/rps\/play\/((r|R)ock|(p|P)aper|(s|S)cissors)(|\/)$/;
 const rpsls_play_only_endpoint = /^\/app\/rpsls\/play\/((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)(|\/)$/;
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/app/rps/play", (req, res) => {
     try {
@@ -39,11 +40,29 @@ app.post("/app/rpsls/play", (req, res) => {
     }
 });
 
+
+app.get("/app/rps/play/", (req, res) => {
+    try {
+        res.send(JSON.stringify(rps(req.query.shot)));
+    }
+    catch (e) {
+        res.status(400).send("404 NOT FOUND");
+    }
+});
+
+
+app.get("/app/rpsls/play", (req, res) => {
+    try {
+        res.send(JSON.stringify(rpsls(req.query.shot)));
+    }
+    catch (e) {
+        res.status(400).send("404 NOT FOUND");
+    }
+});
+
+
 app.get("*", (req, res) => {
-    
-    app.use(bodyParser.urlencoded({ extended: false }));
     var path = req.path;
-    
     if (app_endpoint.test(path)) {
         res.status(200).send("200 OK");
     
@@ -53,30 +72,17 @@ app.get("*", (req, res) => {
     } else if (rpsls_endpoint.test(path)) {
         res.send(JSON.stringify(rpsls()));
 
-    }
-    
-    else if (rps_play_url_endpoint.test(path)) {
-        
-    
-    }
-    else if (rps_play_url_endpoint.test(path)) {
-        
-    
-    }
-
-    else if (rps_play_only_endpoint.test(path)) {
+    } else if (rps_play_only_endpoint.test(path)) {
         path = path.replace("/app/rps/play/", "");
         path = path.replace("/", "");
         res.send(JSON.stringify(rps(path)));
     
-    }
-    else if (rpsls_play_only_endpoint.test(path)) {
+    } else if (rpsls_play_only_endpoint.test(path)) {
         path = path.replace("/app/rpsls/play/", "");
         path = path.replace("/", "");
         res.send(JSON.stringify(rpsls(path)));
     
-    }
-    else {
+    } else {
         res.status(400).send("404 NOT FOUND");
     }
 });
