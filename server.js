@@ -6,16 +6,41 @@ import express from "express";
 const args = minimist(process.argv.slice(2));
 const port = args.port || 5000;
 
+const app_endpoint = new RegExp("^\/app(|\/)$");
+const rps_endpoint = new RegExp("^\/app\/rps(|\/)$");
+const rpsls_endpoint = new RegExp("^\/app\/rpsls(|\/)$");
+const rps_play_url_endpoint = /^\/app\/rps\/play\/shot=((r|R)ock|(p|P)aper|(s|S)cissors)(|\/)$/;
+const rps_play_json_endpoint = /^\/app\/rps\/play\/{\"shot\"\:\"((r|R)ock|(p|P)aper|(s|S)cissors)\"}(|\/)$/
+const rpsls_play_url_endpoint = /^\/app\/rpsls\/play\/shot=((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)(|\/)$/;
+const rpsls_play_json_endpoint = /^\/app\/rpsls\/play\/{\"shot\"\:\"((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)\"}(|\/)$/
+const rps_play_only_endpoint = /^\/app\/rps\/play\/((r|R)ock|(p|P)aper|(s|S)cissors)(|\/)$/;
+const rpsls_play_only_endpoint = /^\/app\/rpsls\/play\/((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)(|\/)$/;
+
 const app = express();
 
-
-
 app.get("*", (req, res) => {
-    console.log(req.path);
-    res.status(200).send("200 OK");
+    var path = req.path;
+    if (app_endpoint.test(path)) {
+        res.status(200).send("200 OK");
+    } else if (rps_endpoint.test(path)) {
+
+    } else if (rpsls_endpoint.test(path)) {
+
+    } else if (rps_play_json_endpoint.test(path)) {
+
+    } else if (rps_play_url_endpoint.test(path)) {
+
+    } else if (rpsls_play_json_endpoint.test(path)) {
+
+    } else if (rpsls_play_url_endpoint.test(path)) {
+
+    } else if (rps_play_only_endpoint.test(path)) {
+
+    } else if (rpsls_play_only_endpoint.test(path)) {
+
+    } else {
+        res.status(400).send("404 NOT FOUND");
+    }
 });
 
 app.listen(port);
-
-
-
