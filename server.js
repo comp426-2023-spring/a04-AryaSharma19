@@ -22,12 +22,21 @@ const app = express();
 app.use(express.json());
 
 app.post("/app/rps/play", (req, res) => {
-    res.send(JSON.stringify(rps(req.body.shot)));
-    
+    try {
+        res.send(JSON.stringify(rps(req.body.shot)));
+    }
+    catch (e) {
+        res.status(400).send("404 NOT FOUND");
+    }
 });
 
 app.post("/app/rpsls/play", (req, res) => {
-    res.send(JSON.stringify(rpsls(req.body.shot)));
+    try {
+        res.send(JSON.stringify(rpsls(req.body.shot)));
+    }
+    catch (e) {
+        res.status(400).send("404 NOT FOUND");
+    }
 });
 
 app.get("*", (req, res) => {
