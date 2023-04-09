@@ -1,0 +1,23 @@
+{
+  "name": "a04-aryasharma19",
+  "version": "1.0.0",
+  "description": "\"API endpoint for RPS game\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comp426-2023-spring/a04-AryaSharma19.git"
+  },
+  "type": "module",
+  "author": "AryaSharma19",
+  "license": "SEE LICENSE IN LISCENSE",
+  "bugs": {
+    "url": "https://github.com/comp426-2023-spring/a04-AryaSharma19/issues"
+  },
+  "homepage": "https://github.com/comp426-2023-spring/a04-AryaSharma19#readme",
+  "dependencies": {
+    "minimist": "^1.2.8"
+  }
+}
