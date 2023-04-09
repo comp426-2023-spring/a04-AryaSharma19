@@ -20,35 +20,13 @@ const rpsls_play_only_endpoint = /^\/app\/rpsls\/play\/((r|R)ock|(p|P)aper|(s|S)
 const app = express();
 
 
-app.post("/app/rps/play/", (req, res) => {
-    console.log(req.path);
-    var path = req.path;
-    
-    if (rps_play_json_endpoint.test(path)) {
-        path = path.replace("/app/rps/play/", "");
-        path = JSON.parse(path);
-        res.send(JSON.stringify(rps(path.shot)));
-    
-    } else if (rps_play_url_endpoint.test(path)) {
-
-    
-    } else if (rpsls_play_json_endpoint.test(path)) {
-
-    
-    } else if (rpsls_play_url_endpoint.test(path)) {
-
-    
-    } else if (rps_play_only_endpoint.test(path)) {
-
-    
-    } else if (rpsls_play_only_endpoint.test(path)) {
-
-    } else {
-        res.status(400).send("404 NOT FOUND");
-    }
+app.post("/app/rps/play", (req, res) => {
+    console.log("Reached");
 });
 
-
+app.post("/app/rps/play", (req, res) => {
+    console.log("Reached");
+});
 
 app.get("*", (req, res) => {
     var path = req.path;
