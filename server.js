@@ -8,11 +8,10 @@ const port = args.port || 5000;
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.status(404).send("404 NOT FOUND");
-});
 
-app.get('/app/', (req, res) => {
+
+app.get("*", (req, res) => {
+    console.log(req.path);
     res.status(200).send("200 OK");
 });
 
