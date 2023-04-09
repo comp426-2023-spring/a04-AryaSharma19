@@ -18,19 +18,23 @@ const rps_play_only_endpoint = /^\/app\/rps\/play\/((r|R)ock|(p|P)aper|(s|S)ciss
 const rpsls_play_only_endpoint = /^\/app\/rpsls\/play\/((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)(|\/)$/;
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(express.json());
 
 app.post("/app/rps/play", (req, res) => {
-    console.log(req.body);
+    res.send(JSON.stringify(rps(req.body.shot)));
+    
 });
 
 app.post("/app/rpsls/play", (req, res) => {
-    console.log(req.body);
+    res.send(JSON.stringify(rpsls(req.body.shot)));
 });
 
 app.get("*", (req, res) => {
+    
+    app.use(bodyParser.urlencoded({ extended: false }));
     var path = req.path;
+    
     if (app_endpoint.test(path)) {
         res.status(200).send("200 OK");
     
@@ -39,7 +43,30 @@ app.get("*", (req, res) => {
     
     } else if (rpsls_endpoint.test(path)) {
         res.send(JSON.stringify(rpsls()));
-    } 
+
+    }
+    
+    else if (rps_play_url_endpoint.test(path)) {
+        
+    
+    }
+    else if (rps_play_url_endpoint.test(path)) {
+        
+    
+    }
+
+    else if (rps_play_only_endpoint.test(path)) {
+        path = path.replace("/app/rps/play/", "");
+        path = path.replace("/", "");
+        res.send(JSON.stringify(rps(path)));
+    
+    }
+    else if (rpsls_play_only_endpoint.test(path)) {
+        path = path.replace("/app/rpsls/play/", "");
+        path = path.replace("/", "");
+        res.send(JSON.stringify(rpsls(path)));
+    
+    }
     else {
         res.status(400).send("404 NOT FOUND");
     }
