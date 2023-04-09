@@ -18,14 +18,15 @@ const rps_play_only_endpoint = /^\/app\/rps\/play\/((r|R)ock|(p|P)aper|(s|S)ciss
 const rpsls_play_only_endpoint = /^\/app\/rpsls\/play\/((r|R)ock|(p|P)aper|(s|S)cissors|(l|L)izard|(s|S)pock)(|\/)$/;
 
 const app = express();
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.post("/app/rps/play", (req, res) => {
-    console.log("Reached");
+    console.log(req.body);
 });
 
-app.post("/app/rps/play", (req, res) => {
-    console.log("Reached");
+app.post("/app/rpsls/play", (req, res) => {
+    console.log(req.body);
 });
 
 app.get("*", (req, res) => {
