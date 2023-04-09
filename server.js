@@ -9,10 +9,14 @@ const port = args.port || 5000;
 const app = express();
 
 app.get('/', (req, res) => {
-    res.status(404).send("NOT FOUND");
+    res.status(404).send("404 NOT FOUND");
 });
 
-app.listen(port, () => console.log(`Hello world app listening on port ${port}!`));
+app.get('/app/', (req, res) => {
+    res.status(200).send("200 OK");
+});
+
+app.listen(port);
 
 
 
